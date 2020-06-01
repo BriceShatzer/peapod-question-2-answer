@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>QUnit Example</title>
+  <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.10.0.css">
+</head>
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+  <div><h3>Solution</h3>
+      <pre>
+        function generateString (HTML) {
+            let arrOfTds = [];
+            let rows = HTML.querySelectorAll('table tr');
+        
+            rows.forEach((row)=>{
+                let tds = row.querySelectorAll('td');
+                tds.forEach(td=>arrOfTds.push(td))
+            });
+            return processTDs(arrOfTds);
+        
+        
+            function processTDs (tdArr) {
+                let string = '';
+                tdArr.forEach(td => {
+                    if (td.style) {
+                        let textColor = td.style.color ? td.style.color : window.getComputedStyle(td, null).getPropertyValue("color");
+                        let bgColor = td.style.backgroundColor ? td.style.backgroundColor : window.getComputedStyle(td, null).getPropertyValue("background-color");
+            
+                        if (textColor !== bgColor) {
+                            string+=td.innerText;
+                        }
+                    } else {
+                        console.error('missing style attribute');
+                        return false 
+                    }
+                });
+                return string;
+            }
+        
+        }                  
+  </pre></div>
+  <script src="https://code.jquery.com/qunit/qunit-2.10.0.js"></script>
+  <script src="generateString.js"></script>
+  <script src="tests.js"></script>
+</body>
+</html>
